@@ -29,5 +29,23 @@ describe Board do
         expect(board_with_vertical_win).to be_game_won
       end
     end
+
+    context 'when there is an ascending diagonal win' do
+      subject(:board_with_ascending_diagonal_win) { described_class.new( [[black_token, nil, nil, nil, nil, nil], [white_token, black_token, nil, nil, nil, nil], [white_token, white_token, black_token, nil, nil, nil], [white_token, white_token, white_token, black_token, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
+      let(:black_token) { instance_double("Token", :owner => 'black') }
+      let(:white_token) { instance_double("Token", :owner => 'white') }
+      it 'should return true' do
+        expect(board_with_ascending_diagonal_win).to be_game_won
+      end
+    end
+
+    context 'when a player has 3 in a row diagonally' do
+      subject(:board_with_three_ascending_diagonally) { described_class.new( [[black_token, nil, nil, nil, nil, nil], [white_token, black_token, nil, nil, nil, nil], [white_token, white_token, black_token, nil, nil, nil], [white_token, white_token, white_token, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
+      let(:black_token) { instance_double("Token", :owner => 'black') }
+      let(:white_token) { instance_double("Token", :owner => 'white') }
+      it 'should return false' do
+        expect(board_with_three_ascending_diagonally).not_to be_game_won
+      end
+    end
   end
 end
