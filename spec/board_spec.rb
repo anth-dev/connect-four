@@ -9,7 +9,7 @@ describe Board do
     
     context 'when the board is empty' do
       subject(:empty_board) { described_class.new }
-      
+
       it 'should return false' do
         expect(empty_board).not_to be_game_won
       end
@@ -70,6 +70,15 @@ describe Board do
 
       it 'should return true' do
         expect(board_with_descending_diagonal_win).to be_game_won
+      end
+    end
+
+    context 'when a player has a horizontal win' do
+      subject(:board_with_horizontal_win) { described_class.new( [[black_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
+      let(:black_token) { instance_double("Token", :owner => 'black') }
+
+      it 'should return true' do
+        expect(board_with_horizontal_win).to be_game_won
       end
     end
   end
