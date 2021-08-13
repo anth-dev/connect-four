@@ -5,3 +5,4 @@ require_relative '../lib/board'
 require_relative '../lib/token'
 
 connect_four = Game.new
+connect_four.take_turn

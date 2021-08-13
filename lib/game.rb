@@ -12,4 +12,7 @@ class Game
     @player == 'black' ? @player = 'white' : @player = 'black'
   end
 
+  def take_turn
+    @board.display_board
+  end
 end
