@@ -82,4 +82,27 @@ describe Board do
       end
     end
   end
+
+  describe '#game_draw?' do
+
+    context 'when the game is not a draw' do
+      subject(:board_with_no_draw) { described_class.new( [[black_token, black_token, nil, nil, nil, nil], [white_token, white_token, nil, nil, nil, nil], [white_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
+      let(:black_token) { instance_double("Token", :owner => 'black') }
+      let(:white_token) { instance_double("Token", :owner => 'white') }
+
+      it 'should return false' do
+        expect(board_with_no_draw).not_to be_game_draw
+      end
+    end
+
+    context 'when the game is a draw' do
+      subject(:board_with_a_draw) { described_class.new( [[white_token, white_token, black_token, white_token, black_token, white_token], [white_token, white_token, black_token, white_token, black_token, white_token], [black_token, black_token, white_token, black_token, black_token, white_token], [black_token, black_token, white_token, black_token, white_token, black_token], [white_token, white_token, black_token, black_token, black_token, white_token], [black_token, white_token, black_token, white_token, black_token, white_token], [white_token, black_token, white_token, black_token, black_token, white_token]] ) }
+      let(:black_token) { instance_double("Token", :owner => 'black') }
+      let(:white_token) { instance_double("Token", :owner => 'white') }
+
+      it 'should return true' do
+        expect(board_with_a_draw).to be_game_draw
+      end
+    end
+  end
 end

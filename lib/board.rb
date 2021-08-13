@@ -71,4 +71,10 @@ class Board
     }
     false
   end
+
+  def game_draw?
+    return true if @board.all? { |column| column.none?(&:nil?) }
+
+    false
+  end
 end
