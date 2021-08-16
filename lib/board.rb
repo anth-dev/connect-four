@@ -82,7 +82,7 @@ class Board
     system 'clear'
 
     puts %(
-      |1|2|3|4|5|6|7|
+      |0|1|2|3|4|5|6|
       ---------------
       |#{determine_display_value(0, 5)}|#{determine_display_value(1, 5)}|#{determine_display_value(2, 5)}|#{determine_display_value(3, 5)}|#{determine_display_value(4, 5)}|#{determine_display_value(5, 5)}|#{determine_display_value(6, 5)}|
       |#{determine_display_value(0 , 4)}|#{determine_display_value(1 , 4)}|#{determine_display_value(2 , 4)}|#{determine_display_value(3 , 4)}|#{determine_display_value(4 , 4)}|#{determine_display_value(5 , 4)}|#{determine_display_value(6 , 4)}|
@@ -101,5 +101,10 @@ class Board
 
     return "\u26AB" if @board[board_index][space_index].owner == 'black'
   
+  end
+
+  def place_token(board_index, token)
+    index_of_first_nil = @board[board_index].find_index(&:nil?)
+    @board[board_index][index_of_first_nil] = token
   end
 end

@@ -136,4 +136,26 @@ describe Board do
         end
       end
   end
+
+  describe '#place_token' do
+    context 'when the column is empty' do
+      subject(:empty_board) { described_class.new }
+      let(:white_token) { instance_double("Token", :owner => 'white') }
+
+      it 'should place a white token at the bottom of the column' do
+        empty_board.place_token(0, white_token)
+        expect(empty_board.board[0][0]).to eq(white_token)
+      end
+    end
+
+    context 'when the column is not empty' do
+      subject(:board_with_one_black_token) { described_class.new( [[black_token, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
+      let(:black_token) { instance_double("Token", :owner => 'black') }
+
+      it 'should place the new token in the next nil spot' do
+        board_with_one_black_token.place_token(0, black_token)
+        expect(board_with_one_black_token.board[0][1]).to eq(black_token)
+      end
+    end
+  end
 end
