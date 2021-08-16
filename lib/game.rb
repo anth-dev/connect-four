@@ -17,6 +17,8 @@ class Game
     puts "Go, #{@player}! Enter a number 0-6."
     print ">"
     handle_input(gets.chomp)
+    @board.display_board
+
   end
 
   def handle_input(input)
