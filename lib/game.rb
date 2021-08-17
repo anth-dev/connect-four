@@ -8,58 +8,59 @@ class Game
     @board = board
   end
 
-  def won?
-    return true if vertical_win?
-    return true if ascending_diagonal_win?
-    return true if descending_diagonal_win?
-    return true if horizontal_win?
+  def check_for_winner
+    return vertical_win if vertical_win
+    return ascending_diagonal_win if ascending_diagonal_win
+    return descending_diagonal_win if descending_diagonal_win
+    return horizontal_win if horizontal_win
 
     false
   end
 
-  def horizontal_win?
+  def horizontal_win
     @board.board.each_with_index { |column, board_index|
       column.each_index { |column_index|
-        next if @board.board[board_index][column_index].nil?
-        next if @board.board[board_index + 1][column_index].nil?
-        next if @board.board[board_index + 2][column_index].nil?
-        next if @board.board[board_index + 3][column_index].nil?
+        next if @board.board[board_index].nil? || @board.board[board_index][column_index].nil?
+        next if @board.board[board_index + 1].nil? || @board.board[board_index + 1][column_index].nil?
+        next if @board.board[board_index + 2].nil? || @board.board[board_index + 2][column_index].nil?
+        next if @board.board[board_index + 3].nil? || @board.board[board_index + 3][column_index].nil?
 
-        return true if ( (@board.board[board_index][column_index].owner == @board.board[board_index + 1][column_index].owner) && (@board.board[board_index + 1][column_index].owner == @board.board[board_index + 2][column_index].owner) && (@board.board[board_index + 2][column_index].owner == @board.board[board_index + 3][column_index].owner) )
+        return @board.board[board_index][column_index].owner if ( (@board.board[board_index][column_index].owner == @board.board[board_index + 1][column_index].owner) && (@board.board[board_index + 1][column_index].owner == @board.board[board_index + 2][column_index].owner) && (@board.board[board_index + 2][column_index].owner == @board.board[board_index + 3][column_index].owner) )
       }
     }
     false
   end
 
-  def descending_diagonal_win?
+  def descending_diagonal_win
     @board.board.each_with_index { |column, board_index|
       column.each_index { |column_index|
-        next if @board.board[board_index][column_index].nil?
-        next if @board.board[board_index + 1][column_index - 1].nil?
-        next if @board.board[board_index + 2][column_index - 2].nil?
-        next if @board.board[board_index + 3][column_index - 3].nil?
+        next if @board.board[board_index].nil? || @board.board[board_index][column_index].nil?
+        next if @board.board[board_index + 1].nil? || @board.board[board_index + 1][column_index - 1].nil?
+        next if @board.board[board_index + 2].nil? || @board.board[board_index + 2][column_index - 2].nil?
+        next if @board.board[board_index + 3].nil? || @board.board[board_index + 3][column_index - 3].nil?
 
-        return true if ( (@board.board[board_index][column_index].owner == @board.board[board_index + 1][column_index - 1].owner) && (@board.board[board_index + 1][column_index - 1].owner == @board.board[board_index + 2][column_index - 2].owner) && (@board.board[board_index + 2][column_index - 2].owner == @board.board[board_index + 3][column_index - 3].owner) )
+        return @board.board[board_index][column_index].owner if ( (@board.board[board_index][column_index].owner == @board.board[board_index + 1][column_index - 1].owner) && (@board.board[board_index + 1][column_index - 1].owner == @board.board[board_index + 2][column_index - 2].owner) && (@board.board[board_index + 2][column_index - 2].owner == @board.board[board_index + 3][column_index - 3].owner) )
       }
     }
     false
   end
 
-  def ascending_diagonal_win?
+  def ascending_diagonal_win
+
     @board.board.each_with_index { |column, board_index|
       column.each_index { |column_index|
-        next if @board.board[board_index][column_index].nil?
-        next if @board.board[board_index + 1][column_index + 1].nil?
-        next if @board.board[board_index + 2][column_index + 2].nil?
-        next if @board.board[board_index + 3][column_index + 3].nil?
+        next if @board.board[board_index].nil? || @board.board[board_index][column_index].nil?
+        next if @board.board[board_index + 1].nil? || @board.board[board_index + 1][column_index + 1].nil?
+        next if @board.board[board_index + 2].nil? || @board.board[board_index + 2][column_index + 2].nil?
+        next if @board.board[board_index + 3].nil? || @board.board[board_index + 3][column_index + 3].nil?
 
-        return true if ( (@board.board[board_index][column_index].owner == @board.board[board_index + 1][column_index + 1].owner) && (@board.board[board_index + 1][column_index + 1].owner == @board.board[board_index + 2][column_index + 2].owner) && (@board.board[board_index + 2][column_index + 2].owner == @board.board[board_index + 3][column_index + 3].owner) )
+        return @board.board[board_index][column_index].owner if ( (@board.board[board_index][column_index].owner == @board.board[board_index + 1][column_index + 1].owner) && (@board.board[board_index + 1][column_index + 1].owner == @board.board[board_index + 2][column_index + 2].owner) && (@board.board[board_index + 2][column_index + 2].owner == @board.board[board_index + 3][column_index + 3].owner) )
       }
     }
     false
   end
 
-  def vertical_win?
+  def vertical_win
     @board.board.each_with_index { |column, board_index| 
       column.each_index { |column_index|
         next if @board.board[board_index][column_index].nil?
@@ -67,7 +68,7 @@ class Game
         next if @board.board[board_index][column_index + 2].nil?
         next if @board.board[board_index][column_index + 3].nil?
 
-        return true if ( (@board.board[board_index][column_index].owner == @board.board[board_index][column_index + 1].owner) && (@board.board[board_index][column_index + 1].owner == @board.board[board_index][column_index + 2].owner) && (@board.board[board_index][column_index + 2].owner == @board.board[board_index][column_index + 3].owner) )
+        return @board.board[board_index][column_index].owner if ( (@board.board[board_index][column_index].owner == @board.board[board_index][column_index + 1].owner) && (@board.board[board_index][column_index + 1].owner == @board.board[board_index][column_index + 2].owner) && (@board.board[board_index][column_index + 2].owner == @board.board[board_index][column_index + 3].owner) )
       }
     }
     false
@@ -91,9 +92,10 @@ class Game
     @board.display_board
 
     # call a method to display the winner if the game has been won
-    @board.display_win_message if @board.game_won?
+    display_win_message(check_for_winner) if check_for_winner
 
     # call a method to display draw message if the game is a draw
+    display_draw_message if draw?
     
     swap_players!
     take_turn
@@ -121,11 +123,13 @@ class Game
 
   end
 
-  def display_win_message
-    puts "Congratulations, #{game_winner}! You are the winner!"
+  def display_draw_message
+    puts 'The game is a draw.'
+    exit
   end
 
-  def return_winner
-    
+  def display_win_message(winner)
+    puts "Congratulations #{winner}, you win!"
+    exit
   end
 end
