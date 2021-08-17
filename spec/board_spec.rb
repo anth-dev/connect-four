@@ -5,107 +5,6 @@ require_relative '../lib/token'
 
 describe Board do
 
-  describe '#game_won?' do
-    
-    context 'when the board is empty' do
-      subject(:empty_board) { described_class.new }
-
-      it 'should return false' do
-        expect(empty_board).not_to be_game_won
-      end
-    end
-
-    context 'when a player has three in a row vertically' do
-      subject(:board_with_three_vertically) { described_class.new( [[nil, nil, nil, nil, nil, nil], [white_token, white_token, white_token, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:white_token) { instance_double("Token", :owner => 'white') }
-
-      it 'should return false' do
-        expect(board_with_three_vertically).not_to be_game_won
-      end
-    end
-
-    context 'when there is a vertical win' do
-      subject(:board_with_vertical_win) { described_class.new( [[nil, nil, nil, nil, nil, nil], [black_token, black_token, black_token, black_token, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-
-      it 'should return true' do
-        expect(board_with_vertical_win).to be_game_won
-      end
-    end
-
-    context 'when there is an ascending diagonal win' do
-      subject(:board_with_ascending_diagonal_win) { described_class.new( [[black_token, nil, nil, nil, nil, nil], [white_token, black_token, nil, nil, nil, nil], [white_token, white_token, black_token, nil, nil, nil], [white_token, white_token, white_token, black_token, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-      let(:white_token) { instance_double("Token", :owner => 'white') }
-
-      it 'should return true' do
-        expect(board_with_ascending_diagonal_win).to be_game_won
-      end
-    end
-
-    context 'when a player has 3 in a row ascending diagonally' do
-      subject(:board_with_three_ascending_diagonally) { described_class.new( [[black_token, nil, nil, nil, nil, nil], [white_token, black_token, nil, nil, nil, nil], [white_token, white_token, black_token, nil, nil, nil], [white_token, white_token, white_token, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-      let(:white_token) { instance_double("Token", :owner => 'white') }
-
-      it 'should return false' do
-        expect(board_with_three_ascending_diagonally).not_to be_game_won
-      end
-    end
-
-    context 'when a player has 3 in a row descending diagonally' do
-      subject(:board_with_three_descending_diagonally) { described_class.new( [[black_token, black_token, black_token, white_token, nil, nil], [black_token, black_token, white_token, nil, nil, nil], [black_token, white_token, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-      let(:white_token) { instance_double("Token", :owner => 'white') }
-
-      it 'should return false' do
-        expect(board_with_three_descending_diagonally).not_to be_game_won
-      end
-    end
-
-    context 'when a player has a descending diagonal win' do
-      subject(:board_with_descending_diagonal_win) { described_class.new( [[black_token, black_token, black_token, white_token, nil, nil], [black_token, black_token, white_token, nil, nil, nil], [black_token, white_token, nil, nil, nil, nil], [white_token, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-      let(:white_token) { instance_double("Token", :owner => 'white') }
-
-      it 'should return true' do
-        expect(board_with_descending_diagonal_win).to be_game_won
-      end
-    end
-
-    context 'when a player has a horizontal win' do
-      subject(:board_with_horizontal_win) { described_class.new( [[black_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-
-      it 'should return true' do
-        expect(board_with_horizontal_win).to be_game_won
-      end
-    end
-  end
-
-  describe '#game_draw?' do
-
-    context 'when the game is not a draw' do
-      subject(:board_with_no_draw) { described_class.new( [[black_token, black_token, nil, nil, nil, nil], [white_token, white_token, nil, nil, nil, nil], [white_token, nil, nil, nil, nil, nil], [black_token, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-      let(:white_token) { instance_double("Token", :owner => 'white') }
-
-      it 'should return false' do
-        expect(board_with_no_draw).not_to be_game_draw
-      end
-    end
-
-    context 'when the game is a draw' do
-      subject(:board_with_a_draw) { described_class.new( [[white_token, white_token, black_token, white_token, black_token, white_token], [white_token, white_token, black_token, white_token, black_token, white_token], [black_token, black_token, white_token, black_token, black_token, white_token], [black_token, black_token, white_token, black_token, white_token, black_token], [white_token, white_token, black_token, black_token, black_token, white_token], [black_token, white_token, black_token, white_token, black_token, white_token], [white_token, black_token, white_token, black_token, black_token, white_token]] ) }
-      let(:black_token) { instance_double("Token", :owner => 'black') }
-      let(:white_token) { instance_double("Token", :owner => 'white') }
-
-      it 'should return true' do
-        expect(board_with_a_draw).to be_game_draw
-      end
-    end
-  end
-
   describe '#determine_display_value' do
     
       context 'when the space is empty' do
@@ -113,8 +12,8 @@ describe Board do
         let(:black_token) { instance_double("Token", :owner => 'black') }
         let(:white_token) { instance_double("Token", :owner => 'white') }
 
-        it 'should return a string containing one space' do
-          expect(board_for_testing_display.determine_display_value(0, 2)).to eq(' ')
+        it 'should return a string containing two spaces' do
+          expect(board_for_testing_display.determine_display_value(0, 2)).to eq('  ')
         end
       end
 
@@ -158,4 +57,5 @@ describe Board do
       end
     end
   end
+
 end
